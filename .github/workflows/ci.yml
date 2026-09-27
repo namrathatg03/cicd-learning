@@ -30,7 +30,7 @@ jobs:
       - name: Run tests
         run: python -m unittest test_app.py
 
-deploy:
+  deploy:
     needs: test
     runs-on: ubuntu-latest
     steps:
