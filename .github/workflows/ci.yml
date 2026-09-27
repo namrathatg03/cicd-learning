@@ -48,6 +48,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Tag Docker image
+        run: docker tag cicd-learning:latest namrathatg/cicd-learning:latest
+
       - name: Push Docker image
         run: docker push namrathatg/cicd-learning:latest
 
