@@ -21,5 +21,11 @@ jobs:
           mkdir -p dist
           tar -czf dist/cicd-learning.tar.gz app.py test_app.py requirements.txt
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cicd-learning-package
+          path: dist/cicd-learning.tar.gz
+
       - name: Run tests
         run: python -m unittest test_app.py
