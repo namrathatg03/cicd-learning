@@ -38,8 +38,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: cicd-learning-package
-          
+
       - name: Deploy package
         run: |
           mkdir -p deployment
           echo "Deploying application..."
+          ls -la
