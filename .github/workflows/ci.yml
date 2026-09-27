@@ -48,6 +48,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Push Docker image
+        run: docker push namrathatg/cicd-learning:latest
+
       - name: Deploy package
         run: |
           mkdir -p deployment
