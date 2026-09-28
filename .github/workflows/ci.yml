@@ -38,6 +38,7 @@ jobs:
 
   deploy:
     needs: test
+    if: startsWith(github.ref_name, 'v')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
