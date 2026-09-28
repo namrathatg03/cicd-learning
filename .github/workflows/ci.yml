@@ -2,6 +2,8 @@ name: Python CI
 
 on:
   push:
+    tags:
+    - "v*"
 
 jobs:
   test:
@@ -57,12 +59,12 @@ jobs:
       - name: Tag Docker image
         run: |
           docker tag cicd-learning:latest namrathatg/cicd-learning:latest
-          docker tag cicd-learning:latest namrathatg/cicd-learning:v2
+          docker tag cicd-learning:latest namrathatg/cicd-learning:${{ github.ref_name }}
 
       - name: Push Docker image
         run: |
           docker push namrathatg/cicd-learning:latest
-          docker push namrathatg/cicd-learning:v2
+          docker push namrathatg/cicd-learning:${{ github.ref_name }}
 
       - name: Deploy package
         run: |
@@ -79,7 +81,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no \
             -i ~/.ssh/ec2_key \
             ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
-            "docker pull namrathatg/cicd-learning:v2 && \
+            "docker pull namrathatg/cicd-learning:${{ github.ref_name }} && \
              docker stop cicd-app || true && \
              docker rm cicd-app || true && \
-             docker run -d --name cicd-app -p 8000:8000 namrathatg/cicd-learning:v2"
+             docker run -d --name cicd-app -p 8000:8000 namrathatg/cicd-learning:${{ github.ref_name }}"
