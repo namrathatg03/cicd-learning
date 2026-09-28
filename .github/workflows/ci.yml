@@ -57,12 +57,12 @@ jobs:
       - name: Tag Docker image
         run: |
           docker tag cicd-learning:latest namrathatg/cicd-learning:latest
-          docker tag cicd-learning:latest namrathatg/cicd-learning:v1
+          docker tag cicd-learning:latest namrathatg/cicd-learning:v2
 
       - name: Push Docker image
         run: |
           docker push namrathatg/cicd-learning:latest
-          docker push namrathatg/cicd-learning:v1
+          docker push namrathatg/cicd-learning:v2
 
       - name: Deploy package
         run: |
