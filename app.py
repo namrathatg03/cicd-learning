@@ -10,7 +10,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-type", "text/plain")
         self.end_headers()
-        self.wfile.write(b"CI/CD deployment is working!")
+        self.wfile.write(b"CI/CD automatic deployment is working!")
 
 
 if __name__ == "__main__":
