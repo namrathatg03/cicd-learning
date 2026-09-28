@@ -79,7 +79,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no \
             -i ~/.ssh/ec2_key \
             ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
-            "docker pull namrathatg/cicd-learning:latest && \
+            "docker pull namrathatg/cicd-learning:v2 && \
              docker stop cicd-app || true && \
              docker rm cicd-app || true && \
-             docker run -d --name cicd-app -p 8000:8000 namrathatg/cicd-learning:latest"
+             docker run -d --name cicd-app -p 8000:8000 namrathatg/cicd-learning:v2"
