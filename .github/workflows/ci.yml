@@ -65,3 +65,17 @@ jobs:
           mkdir -p deployment
           echo "Deploying application..."
           ls -la
+
+      - name: Deploy to EC2
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/ec2_key
+          chmod 600 ~/.ssh/ec2_key
+
+          ssh -o StrictHostKeyChecking=no \
+            -i ~/.ssh/ec2_key \
+            ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
+            "docker pull namrathatg/cicd-learning:latest && \
+             docker stop cicd-app || true && \
+             docker rm cicd-app || true && \
+             docker run -d --name cicd-app -p 8000:8000 namrathatg/cicd-learning:latest"
