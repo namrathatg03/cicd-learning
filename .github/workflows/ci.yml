@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
@@ -58,12 +58,10 @@ jobs:
 
       - name: Tag Docker image
         run: |
-          docker tag cicd-learning:latest namrathatg/cicd-learning:latest
           docker tag cicd-learning:latest namrathatg/cicd-learning:${{ github.ref_name }}
 
       - name: Push Docker image
         run: |
-          docker push namrathatg/cicd-learning:latest
           docker push namrathatg/cicd-learning:${{ github.ref_name }}
 
       - name: Deploy package
