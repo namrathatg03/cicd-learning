@@ -55,10 +55,14 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Tag Docker image
-        run: docker tag cicd-learning:latest namrathatg/cicd-learning:latest
+        run: |
+          docker tag cicd-learning:latest namrathatg/cicd-learning:latest
+          docker tag cicd-learning:latest namrathatg/cicd-learning:v1
 
       - name: Push Docker image
-        run: docker push namrathatg/cicd-learning:latest
+        run: |
+          docker push namrathatg/cicd-learning:latest
+          docker push namrathatg/cicd-learning:v1
 
       - name: Deploy package
         run: |
