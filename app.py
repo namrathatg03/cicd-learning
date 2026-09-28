@@ -1,6 +1,19 @@
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
+
 def add(a, b):
     return a + b
 
 
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/plain")
+        self.end_headers()
+        self.wfile.write(b"CI/CD deployment is working!")
+
+
 if __name__ == "__main__":
-    print(add(10, 30))
+    server = HTTPServer(("0.0.0.0", 8000), Handler)
+    print("Server running on port 8000")
+    server.serve_forever()
