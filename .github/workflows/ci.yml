@@ -86,7 +86,7 @@ jobs:
              docker rm cicd-app || true && \
              docker run -d --name cicd-app -p 8000:8000 namrathatg/cicd-learning:${{ github.ref_name }} && \
              sleep 2 && \
-             if curl -f http://localhost:8000; then \
+             if curl -f http://localhost:9999; then \
                echo 'Deployment successful'; \
              else \
                echo 'Deployment failed - rolling back'; \
@@ -94,7 +94,7 @@ jobs:
                docker rm cicd-app || true; \
                docker run -d --name cicd-app -p 8000:8000 \$CURRENT_IMAGE && \
                sleep 2 && \
-               if curl -f http://localhost:9999; then \
+               if curl -f http://localhost:8000; then \
                  echo 'Rollback successful - restored \$CURRENT_IMAGE'; \
                else \
                  echo 'CRITICAL: Rollback failed'; \
