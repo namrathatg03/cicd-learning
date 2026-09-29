@@ -79,9 +79,20 @@ jobs:
           ssh -o StrictHostKeyChecking=no \
             -i ~/.ssh/ec2_key \
             ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
-            "docker pull namrathatg/cicd-learning:${{ github.ref_name }} && \
+            "CURRENT_IMAGE=\$(docker inspect cicd-app --format '{{.Config.Image}}') && \
+             echo \"Current image: \$CURRENT_IMAGE\" && \
+             docker pull namrathatg/cicd-learning:${{ github.ref_name }} && \
              docker stop cicd-app || true && \
              docker rm cicd-app || true && \
              docker run -d --name cicd-app -p 8000:8000 namrathatg/cicd-learning:${{ github.ref_name }} && \
              sleep 2 && \
-             curl http://localhost:8000"
+             if curl -f http://localhost:8000; then \
+               echo 'Deployment successful'; \
+             else \
+               echo 'Deployment failed - rolling back'; \
+               docker stop cicd-app || true; \
+               docker rm cicd-app || true; \
+               docker run -d --name cicd-app -p 8000:8000 \$CURRENT_IMAGE; \
+               sleep 2; \
+               curl -f http://localhost:8000; \
+             fi"
